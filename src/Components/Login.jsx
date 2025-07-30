@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import japaLogo from "../assets/JAPALOGO.png";
-import { Eye, ArrowLeft } from "iconsax-react";
+import { FaEye, FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FourSquare } from "react-loading-indicators";
 
@@ -13,7 +13,7 @@ const Login = () => {
   const [maskedPassword, setMaskedPassword] = useState("");
   const [isMasked, setIsMasked] = useState(true);
   const [logged, setLogged] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (logged === "yes") {
@@ -26,39 +26,35 @@ const Login = () => {
   };
 
   const login_call = async (email, password) => {
-
     try {
       //extract to env..
-      setLoading(true)
+      setLoading(true);
       const { data } = await axios.post(
         "https://server.japatalent.com/japa/v1/admin/login",
         { email, password }
       );
       if (data.message !== "Invalid details") {
-
         // console.log(data.data.message);
         sessionStorage.setItem("tokken", JSON.stringify(data.message));
         sessionStorage.setItem("details", JSON.stringify(data.user_data));
         setLogged("yes");
-        setLoading(false)
+        setLoading(false);
         return data;
       } else {
-        toast.error("please your check credentials")
-        setLoading(false)
+        toast.error("please your check credentials");
+        setLoading(false);
       }
     } catch (ex) {
       console.log(ex);
-      setLoading(false)
+      setLoading(false);
     }
   };
-
 
   const handle_login = () => {
     if ((email !== "") & (password !== "")) {
       login_call(email, password);
-    }
-    else {
-      console.log("invalid details")
+    } else {
+      console.log("invalid details");
     }
   };
 
@@ -101,7 +97,7 @@ const Login = () => {
                       type={isMasked ? "password" : "text"}
                     />
                     {/* <p> {reveal == true ? password : fakePasswordCover} </p> */}
-                    <Eye
+                    <FaEye
                       size="32"
                       onClick={() => setIsMasked(!isMasked)}
                       color="#000000"
@@ -114,8 +110,16 @@ const Login = () => {
                       className="flex flex-row cusor-pointer  text-white items-center justify-center bg-[#5922A9] h-10 mt-10 rounded-[24px]"
                     >
                       <p className="hover:cursor-pointer"> Sign in </p>
-                      {loading ? <FourSquare color="#ffffff" size="small" text="" textColor="" /> : ""}
-
+                      {loading ? (
+                        <FourSquare
+                          color="#ffffff"
+                          size="small"
+                          text=""
+                          textColor=""
+                        />
+                      ) : (
+                        ""
+                      )}
                     </div>
                   ) : (
                     <p className="font-light text-sm text-center mt-5 text-red-600">
@@ -154,7 +158,7 @@ const Login = () => {
             <div className="flex mx-auto items-center">
               <div>
                 <img src={japaLogo} alt="" />
-                <ArrowLeft
+                <FaArrowLeft
                   size="32"
                   onClick={() => setLoginState(1)}
                   color="#000000"
@@ -205,8 +209,7 @@ const Login = () => {
             <div className="flex mx-auto items-center">
               <div>
                 <img src={japaLogo} alt="" />
-                <ArrowLeft
-                  size="32"
+                <FaArrowLeft
                   onClick={() => setLoginState(2)}
                   color="#000000"
                   className="mt-5"
@@ -256,7 +259,7 @@ const Login = () => {
             <div className="flex mx-auto items-center">
               <div>
                 <img src={japaLogo} alt="" />
-                <ArrowLeft
+                <FaArrowLeft
                   size="32"
                   onClick={() => setLoginState(2)}
                   color="#000000"

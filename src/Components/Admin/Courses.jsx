@@ -12,7 +12,7 @@ import Rating from "@mui/material/Rating";
 import TablePagination from "@mui/material/TablePagination";
 import { useState } from "react";
 import { Skeleton, Table, TableCell } from "@mui/material";
-import { ArrowLeft3, Trash, InfoCircle } from "iconsax-react";
+import { FaArrowLeft, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { FourSquare } from "react-loading-indicators";
 import TableRowsLoader from "../ReUsableTable";
@@ -119,7 +119,7 @@ const CourseTable = ({ data, isLoading, error, manipulateState, remove }) => {
                 <td>
                   <div className="flex flex-row cusor-pointer">
                     <div>
-                      <Trash
+                      <FaTrash
                         onClick={() => remove(x._id)}
                         size="22"
                         color="#FF8A65"
@@ -164,7 +164,7 @@ const Review = ({
     <>
       <div className="mx-5 p-5">
         <div className="flex items-center  space-x-5 flex-row">
-          <ArrowLeft3
+          <FaArrowLeft
             onClick={() => manipulateState(2)}
             size="32"
             color="#000000"
