@@ -29,15 +29,15 @@ import TableRowsLoader from "../ReUsableTable";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState("");
-  const [limit, setLimit] = useState("");
+  const [page, setPage] = useState(0); // MUI pages are 0-based
+  const [limit, setLimit] = useState(10); // 10 items per page
+
   const [rowsperPage, setRowsPerPage] = useState(10);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["getUsers", { limit, page, search }],
-    queryFn: fetchUsers,
-    staleTime: 10000 * 60 * 60 * 24,
-    // refetchOnWindowFocus: false
+    queryFn: () => fetchUsers({ page: page + 1, limit, search }), // Adjust for 1-based backend
+    staleTime: 1000 * 60 * 5,
   });
 
   const {
@@ -48,9 +48,31 @@ const Home = () => {
     queryKey: ["stats"],
     queryFn: fetchStats,
     staleTime: 10000 * 60 * 60 * 24,
-    // refetchOnWindowFocus: false
   });
   console.log(data);
+  const handleExportCSV = () => {
+    if (!data?.users || data.users.length === 0) return;
+
+    const headers = ["First Name", "Email", "Date Registered", "Phone"];
+    const rows = data.users.map((user) => [
+      user.first_name,
+      user.email,
+      user.registration_date?.split("T")[0],
+      user.phone_number,
+    ]);
+
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers, ...rows].map((e) => e.join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "users_export.csv");
+    document.body.appendChild(link); // Required for Firefox
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <>
@@ -90,16 +112,28 @@ const Home = () => {
                 ))} */}
         <div className="flex flex-col mx-5 p-10">
           <div className="flex flex-row space-x-2">
-            <input
-              type="text"
-              className="p-2 border-2 h-10 w-[200px] rounded-md"
-              placeholder="name"
-            />
-            <input
-              type="text"
-              className="border-2 p-2 h-10 w-[200px] rounded-md"
-              placeholder="email"
-            />
+            <div className="flex justify-between w-full">
+              <div className="flex w-full sm:gap-3 gap-6">
+                <input
+                  type="text"
+                  className="p-2 border-2 h-10 w-[20rem] rounded-md"
+                  placeholder="name"
+                />
+                <input
+                  type="text"
+                  className="border-2 p-2 h-10 w-[20rem] rounded-md"
+                  placeholder="email"
+                />
+              </div>
+            </div>
+            <div className="">
+              <button
+                className="bg-purple-700 hover:bg-[#571c88] active:bg-yellow-300 text-white px-4 py-2 rounded whitespace-nowrap transition duration-300 ease-in-out "
+                onClick={handleExportCSV}
+              >
+                Export as CSV
+              </button>
+            </div>
           </div>
 
           <table className="table my-6   w-full  bg-white rounded-md text-sm text-left">
