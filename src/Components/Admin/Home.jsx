@@ -1,42 +1,27 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-import { MdLockOutline, MdAddBox } from "react-icons/md";
-import { AiOutlineArrowDown } from "react-icons/ai";
-import {
-  FaRegClipboard,
-  FaUser,
-  FaUserPlus,
-  FaShoppingBag,
-} from "react-icons/fa";
-import { FiSettings } from "react-icons/fi";
+import { FaRegClipboard } from "react-icons/fa";
 import { SiAirplayaudio } from "react-icons/si";
 
 import { fetchStats, fetchUsers } from "../../api calls/api";
-import { FaUsers } from "react-icons/fa";
+
 import { MdVerifiedUser } from "react-icons/md";
 import { MdPeople } from "react-icons/md";
 
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import TablePagination from "@mui/material/TablePagination";
 import { useState } from "react";
-import { Skeleton, Table, TableCell } from "@mui/material";
 import TableRowsLoader from "../ReUsableTable";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(0); // MUI pages are 0-based
-  const [limit, setLimit] = useState(10); // 10 items per page
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   const [rowsperPage, setRowsPerPage] = useState(10);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["getUsers", { limit, page, search }],
-    queryFn: () => fetchUsers({ page: page + 1, limit, search }), // Adjust for 1-based backend
+    queryFn: () => fetchUsers({ page: page + 1, limit, search }),
     staleTime: 1000 * 60 * 5,
   });
 
