@@ -1,4 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 
 import { FaRegClipboard } from "react-icons/fa";
 import { SiAirplayaudio } from "react-icons/si";
@@ -14,14 +18,14 @@ import TableRowsLoader from "../ReUsableTable";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(0); // MUI pages are 0-based
+  const [limit, setLimit] = useState(10); // 10 items per page
 
   const [rowsperPage, setRowsPerPage] = useState(10);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["getUsers", { limit, page, search }],
-    queryFn: () => fetchUsers({ page: page + 1, limit, search }),
+    queryFn: () => fetchUsers({ page: page + 1, limit, search }), // Adjust for 1-based backend
     staleTime: 1000 * 60 * 5,
   });
 
