@@ -74,7 +74,7 @@ const Login = () => {
           <form onSubmit={handle_login} className="flex mx-auto items-center">
             <div>
               <img src={japaLogo} alt="logo" />
-              <h1 className="mt-10 font-medium text-[30px]">Welcome back!</h1>
+              <h1 className="mt-9 font-medium text-[30px]">Welcome back!</h1>
               <div className="flex flex-col mt-10">
                 <label>Email:</label>
                 <input
