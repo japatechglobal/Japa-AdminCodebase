@@ -97,7 +97,7 @@ const Login = () => {
                     className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
                     onClick={() => setIsMasked(!isMasked)}
                   >
-                    {isMasked ? <FaEye size="20" /> : <FaEyeSlash size="20" />}
+                    {isMasked ? <FaEyeSlash size="20" /> : <FaEye size="20" />}
                   </div>
                 </div>
               </div>
