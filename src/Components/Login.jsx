@@ -81,7 +81,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
-                  className="p-2 border-2 w-[441px] rounded-md mt-2"
+                  className="p-2 border-2 w-[441px] rounded-md"
                 />
               </div>
               <div className="flex flex-col mt-5">
@@ -90,14 +90,14 @@ const Login = () => {
                   <input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="p-2 border-2 w-[441px] rounded-md mt-2 pr-10"
+                    className="p-2 border-2 w-[441px] rounded-md pr-10"
                     type={isMasked ? "password" : "text"}
                   />
                   <div
                     className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
                     onClick={() => setIsMasked(!isMasked)}
                   >
-                    {isMasked ? <FaEye size="20" /> : <FaEyeSlash size="20" />}
+                    {isMasked ? <FaEyeSlash size="20" /> : <FaEye size="20" />}
                   </div>
                 </div>
               </div>
@@ -106,7 +106,7 @@ const Login = () => {
                 className="w-full mt-10 flex items-center justify-center bg-[#5922A9] text-white h-10 rounded-[24px]"
                 disabled={loading}
               >
-                {loading ? <FourSquare color="#fff" /> : "Sign in"}
+                {loading ? <FourSquare color="#fff" size="2" /> : "Sign in"}
               </button>
               <p
                 onClick={() => setLoginState(2)}
