@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if (logged === "yes") {
-      window.location.href = "/admin";
+      window.location.href = "/admin/home";
     }
   }, [logged]);
 
