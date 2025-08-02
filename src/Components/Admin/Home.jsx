@@ -1,8 +1,4 @@
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { FaRegClipboard } from "react-icons/fa";
 import { SiAirplayaudio } from "react-icons/si";
@@ -18,8 +14,8 @@ import TableRowsLoader from "../ReUsableTable";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(0); // MUI pages are 0-based
-  const [limit, setLimit] = useState(10); // 10 items per page
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   const [rowsperPage, setRowsPerPage] = useState(10);
 
@@ -38,7 +34,7 @@ const Home = () => {
     queryFn: fetchStats,
     staleTime: 10000 * 60 * 60 * 24,
   });
-  console.log(data);
+
   const handleExportCSV = () => {
     if (!data?.users || data.users.length === 0) return;
 
@@ -58,7 +54,7 @@ const Home = () => {
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", "users_export.csv");
-    document.body.appendChild(link); // Required for Firefox
+    document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
